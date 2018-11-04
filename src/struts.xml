@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<!-- 中文乱码 -->
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<!-- 动态调用 必须设置该常量为true -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<package name="Struts2" namespace="/" extends="struts-default">
+
+		<default-action-ref name="defaultAction"></default-action-ref>
+		<global-results>
+			<result name="success">/hello.jsp</result>
+		</global-results>
+
+		<action name="defaultAction">
+			<result>error.jsp</result>
+		</action>
+
+
+		<action name="helloAction" class="cn.bdqn.struts2.action.HelloAction">
+			<result name="input">/login.jsp</result>
+		</action>
+
+		<action name="loginAction" class="cn.bdqn.struts2.action.LoginAction">
+			<result name="success">/hello.jsp</result>
+			<result name="failed">/index.jsp</result>
+		</action>
+
+		<action name="validate" class="cn.bdqn.struts2.action.ValidateLoginAction">
+			<result name="success">/hello.jsp</result>
+			<result name="failed">/index.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+
+
+
+		<!-- LoginTwoAction -->
+		<action name="Login" class="cn.bdqn.struts2.action.LoginTwoAction"
+			method="login">
+			<result name="success">/hello.jsp</result>
+			<result name="error">/index.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		<action name="Regist" class="cn.bdqn.struts2.action.LoginTwoAction"
+			method="regist">
+			<result name="login">/hello.jsp</result>
+		</action>
+
+		<!-- 动态调用 ! -->
+		<action name="userLogin" class="cn.bdqn.struts2.action.LoginTwoAction">
+			<result name="success">/hello.jsp</result>
+			<result name="error">/index.jsp</result>
+			<result name="input">/index.jsp</result>
+			<result name="login">/hello.jsp</result>
+		</action>
+
+		<!-- 动态调用 通配符 * -->
+		<action name="*User" class="cn.bdqn.struts2.action.LoginTwoAction">
+			<!-- <result name="success" type="redirectAction">iterator</result> -->
+			<result name="error">/{1}.jsp</result>
+			<result name="input">/{1}.jsp</result>
+			<result name="login">/{1}.jsp</result>
+		</action>
+
+		<action name="iterator" class="cn.bdqn.struts2.action.IteratorAction"
+			method="getNameList">
+			<result name="success">/iterator.jsp</result>
+		</action>
+	</package>
+
+</struts>
